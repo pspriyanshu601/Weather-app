@@ -1,69 +1,149 @@
-<!DOCTYPE html>
-<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Weather App Project JavaScript | CodingNepal</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://img.icons8.com/cute-clipart/64/cloud.png">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   </head>
-  <body>
-    <h1>Weather Dashboard</h1>
-    <div class="container">
-      <div class="weather-input">
-        <h3>Enter a City Name</h3>
-        <input class="city-input" type="text" placeholder="E.g., New York, London, Tokyo">
-        <button class="search-btn">Search</button>
-        <div class="separator"></div>
-        <button class="location-btn">Use Current Location</button>
-      </div>
-      <div class="weather-data">
-        <div class="current-weather">
-          <div class="details">
-            <h2>_______ ( ______ )</h2>
-            <h6>Temperature: __°C</h6>
-            <h6>Wind: __ M/S</h6>
-            <h6>Humidity: __%</h6>
+  <body  style="background-color: rgb(174, 232, 255)" >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-0 h" >
+        <div class="container-fluid" style="background-color: rgb(0, 0, 0);">
+          <a class="navbar-brand" href="#" style="color: white">WeatherApp</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex" role="search">
+              <input id="city" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" id="submit" style ="color:white">Search</button>
+            </form>
           </div>
         </div>
-        <div class="days-forecast">
-          <h2>5-Day Forecast</h2>
-          <ul class="weather-cards">
-            <li class="card">
-              <h3>( ______ )</h3>
-              <h6>Temp: __C</h6>
-              <h6>Wind: __ M/S</h6>
-              <h6>Humidity: __%</h6>
-            </li>
-            <li class="card">
-              <h3>( ______ )</h3>
-              <h6>Temp: __C</h6>
-              <h6>Wind: __ M/S</h6>
-              <h6>Humidity: __%</h6>
-            </li>
-            <li class="card">
-              <h3>( ______ )</h3>
-              <h6>Temp: __C</h6>
-              <h6>Wind: __ M/S</h6>
-              <h6>Humidity: __%</h6>
-            </li>
-            <li class="card">
-              <h3>( ______ )</h3>
-              <h6>Temp: __C</h6>
-              <h6>Wind: __ M/S</h6>
-              <h6>Humidity: __%</h6>
-            </li>
-            <li class="card">
-              <h3>( ______ )</h3>
-              <h6>Temp: __C</h6>
-              <h6>Wind: __ M/S</h6>
-              <h6>Humidity: __%</h6>
-            </li>
-          </ul>
-        </div>
+      </nav>
+
+      <div class="container">
+        <h1 class="my-4 text-center"><span id="cityName"></span></h1>
+        <main>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+              <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                  <div class="card-header py-3 text-bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Temperatures</h4>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="temp"></span></li><small class="text-body-secondary fw-light"><span> &#8451;</span></small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                      <li>Min Temperature:  <span id="min_temp"></span></li>
+                      <li>Max Temperature:  <span id="max_temp"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                  <div class="card-header py-3 text-bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Humidity Info</h4>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="humidity"></span><small class="text-body-secondary fw-light"> %</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                      <li>Cloud Percent:  <span id="cloud_pct"></span></li>
+                      <li>Feels like:  <span id="feels_like"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                  <div class="card-header py-3 text-bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Wind Info</h4>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="wind_speed2"></span><small class="text-body-secondary fw-light"> Knots</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Wind Speed:  <span id="wind_speed"></span></li>
+                        <li>Wind Degrees:  <span id="wind_degrees"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <h2 class="display-8 text-center mb-4">Weather of Other Places</h2>
+            <div class="table-responsive" >
+              <table class="table text-center">
+                <thead>
+                  <tr>
+                    <th style="width: 12%;"></th>
+                    <th style="width: 11%;"> Cloud Percent (%) </th>
+                    <th style="width: 11%;"> Temp (<span> &#8451;</span>)</th>
+                    <th style="width: 11%;"> Humidity (%)</th>
+                    <th style="width: 11%;"> Max temp (<span> &#8451;</span>)</th>
+                    <th style="width: 11%;"> Min temp (<span> &#8451;</span>)</th>
+                    <th style="width: 11%;"> Feels like (<span>&#8451;</span>)</th>
+                    <th style="width: 11%;"> Wind degrees (<span>&#176;</span>)</th>
+                    <th style="width: 11%;"> Wind speed (Knots)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="text-start">Tokyo</th>
+                    <td><span id="tcloud_pct"></span></td>
+                    <td><span id="ttemp"></span></td>
+                    <td><span id="thumidity"></span></td>
+                    <td><span id="tmax_temp"></span></td>
+                    <td><span id="tmin_temp"></span></td>
+                    <td><span id="tfeels_like"></span></td>
+                    <td><span id="twind_degrees"></span></td>
+                    <td><span id="twind_speed"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-start">Boston</th>
+                    <td><span id="bcloud_pct"></span></td>
+                    <td><span id="btemp"></span></td>
+                    <td><span id="bhumidity"></span></td>
+                    <td><span id="bmax_temp"></span></td>
+                    <td><span id="bmin_temp"></span></td>
+                    <td><span id="bfeels_like"></span></td>
+                    <td><span id="bwind_degrees"></span></td>
+                    <td><span id="bwind_speed"></span></td>
+                  </tr>
+                </tbody>
+        
+                <tbody>
+                  <tr>
+                    <th scope="row" class="text-start">Amsterdam</th>
+                    <td><span id="acloud_pct"></span></td>
+                    <td><span id="atemp"></span></td>
+                    <td><span id="ahumidity"></span></td>
+                    <td><span id="amax_temp"></span></td>
+                    <td><span id="amin_temp"></span></td>
+                    <td><span id="afeels_like"></span></td>
+                    <td><span id="awind_degrees"></span></td>
+                    <td><span id="awind_speed"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-start">Ahmedabad</th>
+                    <td><span id="ahcloud_pct"></span></td>
+                    <td><span id="ahtemp"></span></td>
+                    <td><span id="ahhumidity"></span></td>
+                    <td><span id="ahmax_temp"></span></td>
+                    <td><span id="ahmin_temp"></span></td>
+                    <td><span id="ahfeels_like"></span></td>
+                    <td><span id="ahwind_degrees"></span></td>
+                    <td><span id="ahwind_speed"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </main>
       </div>
-    </div>
-    
-  </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
 </html>
