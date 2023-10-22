@@ -1,103 +1,111 @@
-const cityInput = document.querySelector(".city-input");
-const searchButton = document.querySelector(".search-btn");
-const locationButton = document.querySelector(".location-btn");
-const currentWeatherDiv = document.querySelector(".current-weather");
-const weatherCardsDiv = document.querySelector(".weather-cards");
+const url = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=Ahmedabad';
+const options = {
+	method: 'GET',
+	headers: {
+        "content-type": "application/octet-stream",
+		'X-RapidAPI-Key': '85b5fbc4f1msha2cec5b3112d906p17f48ejsnbe2b1a5b7eb5',
+		'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+	}
+};
 
-const API_KEY = "0c85a4eec4395c77fe764ed734a402c0"; // API key for OpenWeatherMap API
-
-const createWeatherCard = (cityName, weatherItem, index) => {
-    if(index === 0) { // HTML for the main weather card
-        return `<div class="details">
-                    <h2>${cityName} (${weatherItem.dt_txt.split(" ")[0]})</h2>
-                    <h6>Temperature: ${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
-                    <h6>Wind: ${weatherItem.wind.speed} M/S</h6>
-                    <h6>Humidity: ${weatherItem.main.humidity}%</h6>
-                </div>
-                <div class="icon">
-                    <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}@4x.png" alt="weather-icon">
-                    <h6>${weatherItem.weather[0].description}</h6>
-                </div>`;
-    } else { // HTML for the other five day forecast card
-        return `<li class="card">
-                    <h3>(${weatherItem.dt_txt.split(" ")[0]})</h3>
-                    <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}@4x.png" alt="weather-icon">
-                    <h6>Temp: ${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
-                    <h6>Wind: ${weatherItem.wind.speed} M/S</h6>
-                    <h6>Humidity: ${weatherItem.main.humidity}%</h6>
-                </li>`;
-    }
+const getWeather =  (city)=>{
+// cityName.innerHTML = city
+cityName.innerHTML = city.charAt(0).toUpperCase() + city.slice(1);
+fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + city, options)
+.then(response => response.json())
+.then(response => 
+    {
+        console.log(response)
+        cloud_pct.innerHTML = response.cloud_pct
+        temp.innerHTML = response.temp
+        feels_like.innerHTML = response.feels_like
+        humidity.innerHTML = response.humidity
+        min_temp.innerHTML = response.min_temp
+        max_temp.innerHTML = response.max_temp
+        wind_speed.innerHTML = response.wind_speed
+        wind_speed2.innerHTML = response.wind_speed
+        wind_degrees.innerHTML = response.wind_degrees
+        sunrise.innerHTML = response.sunrise
+        sunset.innerHTML = response.sunset
+    })
+.catch(err => console.error(err));
 }
 
-const getWeatherDetails = (cityName, latitude, longitude) => {
-    const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + "Tokyo", options)
+.then(response => response.json())
+.then(response => 
+    {
+        console.log(response)
+        tcloud_pct.innerHTML = response.cloud_pct
+        ttemp.innerHTML = response.temp
+        tfeels_like.innerHTML = response.feels_like
+        thumidity.innerHTML = response.humidity
+        tmin_temp.innerHTML = response.min_temp
+        tmax_temp.innerHTML = response.max_temp
+        twind_speed.innerHTML = response.wind_speed
+        twind_degrees.innerHTML = response.wind_degrees
+        tsunrise.innerHTML = response.sunrise
+        tsunset.innerHTML = response.sunset
+    })
+.catch(err => console.error(err));
 
-    fetch(WEATHER_API_URL).then(response => response.json()).then(data => {
-        // Filter the forecasts to get only one forecast per day
-        const uniqueForecastDays = [];
-        const fiveDaysForecast = data.list.filter(forecast => {
-            const forecastDate = new Date(forecast.dt_txt).getDate();
-            if (!uniqueForecastDays.includes(forecastDate)) {
-                return uniqueForecastDays.push(forecastDate);
-            }
-        });
+fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + "Boston", options)
+.then(response => response.json())
+.then(response => 
+    {
+        console.log(response)
+        bcloud_pct.innerHTML = response.cloud_pct
+        btemp.innerHTML = response.temp
+        bfeels_like.innerHTML = response.feels_like
+        bhumidity.innerHTML = response.humidity
+        bmin_temp.innerHTML = response.min_temp
+        bmax_temp.innerHTML = response.max_temp
+        bwind_speed.innerHTML = response.wind_speed
+        bwind_degrees.innerHTML = response.wind_degrees
+        bsunrise.innerHTML = response.sunrise
+        bsunset.innerHTML = response.sunset
+    })
+.catch(err => console.error(err));
 
-        // Clearing previous weather data
-        cityInput.value = "";
-        currentWeatherDiv.innerHTML = "";
-        weatherCardsDiv.innerHTML = "";
+fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + "Amsterdam", options)
+.then(response => response.json())
+.then(response => 
+    {
+        console.log(response)
+        acloud_pct.innerHTML = response.cloud_pct
+        atemp.innerHTML = response.temp
+        afeels_like.innerHTML = response.feels_like
+        ahumidity.innerHTML = response.humidity
+        amin_temp.innerHTML = response.min_temp
+        amax_temp.innerHTML = response.max_temp
+        awind_speed.innerHTML = response.wind_speed
+        awind_degrees.innerHTML = response.wind_degrees
+        asunrise.innerHTML = response.sunrise
+        asunset.innerHTML = response.sunset
+    })
+.catch(err => console.error(err));
 
-        // Creating weather cards and adding them to the DOM
-        fiveDaysForecast.forEach((weatherItem, index) => {
-            const html = createWeatherCard(cityName, weatherItem, index);
-            if (index === 0) {
-                currentWeatherDiv.insertAdjacentHTML("beforeend", html);
-            } else {
-                weatherCardsDiv.insertAdjacentHTML("beforeend", html);
-            }
-        });        
-    }).catch(() => {
-        alert("An error occurred while fetching the weather forecast!");
-    });
-}
+fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + "Ahmedabad", options)
+.then(response => response.json())
+.then(response => 
+    {
+        console.log(response)
+        ahcloud_pct.innerHTML = response.cloud_pct
+        ahtemp.innerHTML = response.temp
+        ahfeels_like.innerHTML = response.feels_like
+        ahhumidity.innerHTML = response.humidity
+        ahmin_temp.innerHTML = response.min_temp
+        ahmax_temp.innerHTML = response.max_temp
+        ahwind_speed.innerHTML = response.wind_speed
+        ahwind_degrees.innerHTML = response.wind_degrees
+        ahsunrise.innerHTML = response.sunrise
+        ahsunset.innerHTML = response.sunset
+    })
+.catch(err => console.error(err));
 
-const getCityCoordinates = () => {
-    const cityName = cityInput.value.trim();
-    if (cityName === "") return;
-    const API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
-    
-    // Get entered city coordinates (latitude, longitude, and name) from the API response
-    fetch(API_URL).then(response => response.json()).then(data => {
-        if (!data.length) return alert(`No coordinates found for ${cityName}`);
-        const { lat, lon, name } = data[0];
-        getWeatherDetails(name, lat, lon);
-    }).catch(() => {
-        alert("An error occurred while fetching the coordinates!");
-    });
-}
+submit.addEventListener("click", (e)=>{
+    e.preventDefault()
+    getWeather(city.value)
+})
 
-const getUserCoordinates = () => {
-    navigator.geolocation.getCurrentPosition(
-        position => {
-            const { latitude, longitude } = position.coords; // Get coordinates of user location
-            // Get city name from coordinates using reverse geocoding API
-            const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`;
-            fetch(API_URL).then(response => response.json()).then(data => {
-                const { name } = data[0];
-                getWeatherDetails(name, latitude, longitude);
-            }).catch(() => {
-                alert("An error occurred while fetching the city name!");
-            });
-        },
-        error => { // Show alert if user denied the location permission
-            if (error.code === error.PERMISSION_DENIED) {
-                alert("Geolocation request denied. Please reset location permission to grant access again.");
-            } else {
-                alert("Geolocation request error. Please reset location permission.");
-            }
-        });
-}
-
-locationButton.addEventListener("click", getUserCoordinates);
-searchButton.addEventListener("click", getCityCoordinates);
-cityInput.addEventListener("keyup", e => e.key === "Enter" && getCityCoordinates());
+getWeather("London")
